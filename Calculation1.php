@@ -54,42 +54,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $crate = isset($_POST['crate']) && is_numeric($_POST['crate']) ? floatval($_POST['crate']) : 0;
 
 
-    if ($voltage > 0 && $current > 0 && $crate > 0) {
+    function calculatepowerandcost($voltage, $current, $crate)
+    {
+        
 
-        $power = $voltage * $current;
-    	$rate = $crate / 100;
+        if ($voltage > 0 && $current > 0 && $crate > 0) {
 
-    	echo "<p>POWER: $power kw</p>";
-    	echo "<p>RATE: $rate RM</p><br>";
+            $power = $voltage * $current;
+            $rate = $crate / 100;
 
-    	echo "<table>";
-        echo "<tr><th>#</th><th>Hour</th><th>Energy(kWh)</th><th>TOTAL(RM)</th></tr>";
+            echo "<p>POWER: $power kw</p>";
+            echo "<p>RATE: $rate RM</p><br>";
+
+            echo "<table>";
+            echo "<tr><th>#</th><th>Hour</th><th>Energy(kWh)</th><th>TOTAL(RM)</th></tr>";
 
 
-    	for ($hours=1; $hours <=24 ; $hours++) 
-    	{     	
+            for ($hours=1; $hours <=24 ; $hours++) 
+            {       
 
-    	$energy = $power * $hours * 1000;
-    	$total = $energy * ($crate / 100);
+                $energy = $power * $hours * 1000;
+                $total = $energy * ($crate / 100);
 
-    	echo "<tr>";
-    	echo "<td><b>$hours</td>";
-    	echo "<td>$hours</td>";
-    	echo "<td>$energy</td>";
-    	echo "<td>" . number_format($total, 2) . "</td>";
-    	echo "</tr>";
+                echo "<tr>";
+                echo "<td><b>$hours</td>";
+                echo "<td>$hours</td>";
+                echo "<td>$energy</td>";
+                echo "<td>" . number_format($total, 2) . "</td>";
+                echo "</tr>";
 
-    	}
+            }
 
-    	echo "</table>";
-    }       
+            echo "</table>";
 
-    else {
+        }       
 
-        echo "<p>Please enter values for voltage, current, and rate.</p>";
-    }    
+        else {
+
+            echo "<p>Please enter values for voltage, current, and rate.</p>";
+        }    
+    }
+
+
+    calculatepowerandcost($voltage, $current, $crate);
 
 }
+
 ?>
 </div>    
 </body>
